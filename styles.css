@@ -55,6 +55,10 @@ button:hover {
 
 #plot-container {
   margin-top: 30px;
+  /* make it such that it fits all the plots drawn in it*/
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .plot-grid {
