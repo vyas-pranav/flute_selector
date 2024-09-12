@@ -1,3 +1,4 @@
+// scripts.js
 const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 const good_bad_code = [1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1];
 const intervalMap = {
@@ -15,6 +16,9 @@ document.getElementById('calculate-btn').addEventListener('click', () => {
 
     const basePitchIndex = notes.indexOf(basePitch);
     const westernScalePitches = hindustaniToWestern(scaleInput, basePitchIndex);
+
+    // Display the scale notes in Western notation based on the selected base pitch
+    displayWesternScale(westernScalePitches, basePitch);
 
     const results = evaluateAllPitches(westernScalePitches, basePitchIndex);
     displayPlots(results, basePitchIndex, scaleInput);
@@ -41,16 +45,11 @@ function hindustaniToWestern(scaleNotes, basePitchIndex) {
 }
 
 function evaluatePitch(pitchIndex, westernScalePitches) {
-    // Shift the pitch scale to the base pitch index
-    const shiftedScale = Array(12).fill(0).map((_, i) => (pitchIndex + i) % 12);
+    const chromaticScale = Array(12).fill(0);
+    westernScalePitches.forEach(pitch => chromaticScale[(pitchIndex + pitch) % 12] = 1);
     
-    // Create a binary series for the chromatic scale
-    const binarySeries = shiftedScale.map(pitch => westernScalePitches.includes(pitch) ? 1 : 0);
-    
-    // Element-wise multiplication with good_bad_code
-    const resultArray = binarySeries.map((val, i) => val * good_bad_code[i]);
-    
-    return { score: resultArray.reduce((a, b) => a + b, 0), binarySeries };
+    const resultArray = chromaticScale.map((val, i) => val * good_bad_code[i]);
+    return { score: resultArray.reduce((a, b) => a + b, 0), binarySeries: chromaticScale };
 }
 
 function evaluateAllPitches(westernScalePitches, basePitchIndex) {
@@ -62,16 +61,18 @@ function evaluateAllPitches(westernScalePitches, basePitchIndex) {
 }
 
 function calculateSaMeans(pitchIndex, basePitchIndex) {
-    // Shift the pitch scale based on the pitchIndex
     const shiftedScale = Array(12).fill(0).map((_, i) => (pitchIndex + i) % 12);
-    
-    // Find the index where Sa (base pitch) is located
     const saIndex = shiftedScale.indexOf(basePitchIndex);
     
-    // Return the corresponding Indian note for the Sa index
+    // Find the Indian note for the corresponding Sa index
     for (const [key, value] of Object.entries(intervalMap)) {
         if (value === saIndex) return key;
     }
+}
+
+function displayWesternScale(westernScalePitches, basePitch) {
+    const westernScaleDiv = document.getElementById('western-scale');
+    westernScaleDiv.textContent = `Scale notes in Western notation based on ${basePitch}: ${westernScalePitches.map(pitch => notes[pitch]).join(', ')}`;
 }
 
 function displayPlots(results, basePitchIndex, hindustaniScale) {

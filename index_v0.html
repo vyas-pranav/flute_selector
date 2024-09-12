@@ -8,13 +8,14 @@
 </head>
 <body>
   <div class="container">
-    <h1>Flute Selection Tool</h1>
+    <h1>Flute selection tool</h1>
 
+    <!-- write a description of webpage here -->
     <p>
-      This tool helps you visualize the notes of a given scale on different flutes when the composition is being played in a given base pitch. You can enter the scale notes as a string of letters from: {S r R g G m M P d D n N} (case sensitive) separated by spaces, and a base pitch from {C C# D D# E F F# G G# A A# B} to see the notes on flutes of different pitches. 
-      The tool also suggests the best flute to play the scale with minimum half-open holes, along with a score suggesting how many open hole notes can be played.
+      This tool helps you visualize the notes of a given scale on different flutes, when the composition is being played in a given base pitch. You can enter the scale notes as a string of letters from: {S r R g G m M P d D n N} (case sensitive) separated by spaces, and a base pitch from {C C# D D# E F F# G G# A A# B} to see the notes on flutes of different pitches. 
+      The tool also suggests the best flute to play the scale with minimum half open holes, along with a score suggesting how many open hole notes can be played.
     </p>
-
+    
     <div class="input-container">
       <label for="scale-input">Enter Scale (e.g., S R G P D N):</label>
       <input type="text" id="scale-input" placeholder="Enter scale notes">
@@ -26,9 +27,6 @@
     </div>
 
     <button id="calculate-btn">Calculate and Plot</button>
-
-    <!-- Display for Western notation based on the selected base pitch -->
-    <div id="western-scale" class="western-scale-display"></div>
 
     <div id="plot-container"></div>
   </div>
