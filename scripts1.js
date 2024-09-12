@@ -78,11 +78,6 @@ function calculateSaMeans(pitchIndex, basePitchIndex) {
     }
 }
 
-function displayWesternScale(westernScalePitches, basePitch) {
-    const westernScaleDiv = document.getElementById('western-scale');
-    westernScaleDiv.textContent = `Scale notes in Western notation based on ${basePitch}: ${westernScalePitches.map(pitch => notes[pitch]).join(', ')}`;
-}
-
 function displayPlots(results, basePitchIndex, hindustaniScale) {
     const plotContainer = document.getElementById('plot-container');
     plotContainer.innerHTML = ''; // Clear previous plots
